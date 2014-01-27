@@ -1,0 +1,107 @@
+typen 
+	my_int is inter range 1..integer'last;
+	my_float is digits 30 range 0.0..10_000.0; --digits = länge 						           --der mantisse
+	my_fixed is delta 0.01 range 0.0..1.0e3; --fixpunkt
+
+
+
+Case var is
+	when 1 =>
+	when 2 | 3 =>
+	when others =>
+end case;
+
+if condition then 
+	commands
+elsif condition then
+	commands
+else
+	commands
+end if;
+
+procedure foo(var: in integer; var2: in out float; var3: out integer) is
+begin
+
+function foo_bar(var: in integer) return integer is
+begin
+
+type foo is record
+	real: float := 0.0;
+	imag: float := 0.0;
+end record;
+
+type int* is access integer;
+int_ptr: int* := new integer;
+int_ptr.all := 10;
+
+
+procedure foo is separate;
+->
+separate(main)
+
+type boolean
+type integer
+type float
+type character
+subtype natural
+subtype positive
+type string
+type duration	
+
+exception
+	when data_error =>
+	
+	when constraint error =>
+
+package foo is -> foo.ads
+package body foo is -> foo.adb
+
+type son is new father_pkg.father with private;  --wenn mans erweitern will und der vater typ privat ist
+private
+	type son is new father_pkg.father with record
+	--neue sachen
+	end record;
+
+Polymorpher zeiger
+	type poly_ptr is access all father'class
+zeiger of methoden
+	type meth_ptr is access procedure(foo:integer)
+
+abstrakt
+	type foo is abstract tagged null record --muss beim vererben implementiert werden
+
+interface
+	type foo_face is interface;
+	procedure op1(X: foo_face) is abstract;  --abstrakt muss implementiert werde
+	procedure op2(X: foo_face) is null;      --leere funktion -> muss nicht implementiert werden
+->mehrfachvererbung:
+	type foo_bar is new T and foo_face and     -- beliebig viele interfaces aber tagged type muss zuerst
+generisch
+	ganzzahlig
+		type x is range <>
+	festpunkt
+		type x is delta <>
+	gleitpunkt
+		type x us digits <>
+	aufzählung
+		type x is (<>)
+	instanziierung generisches Objekt
+		package foo is new bar(foo--template param--);
+
+tasks
+	entry -> aufrufender task schläft bis accept block in task abgearbeitet ist
+	kommt task an accept anweisung -> schlafen bis entry aufgerufen wird
+
+
+array
+	emp_arr: array(0..9) of integer := (others => 0); --fest
+	 type vector is array(integer range <>) of integer; --variabel
+	type tdvector is array(integer range <>, integer range <>) of integer; --2d
+	for i in ultra_arr'First(1)..ultra_arr'Last(1) loop
+           for j in ultra_arr'First(2)..ultra_arr'Last(2) loop
+
+
+for i in (reverse) 1..ende loop
+	end loop
+while i < n loop
+end loop;

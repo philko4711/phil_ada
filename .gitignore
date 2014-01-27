@@ -1,0 +1,11 @@
+*.ali
+*.o
+*.gpr
+main
+.cproject
+.gb_project
+.project
+.metadata
+array_test
+strings
+swap_ptr
