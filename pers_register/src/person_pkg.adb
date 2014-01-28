@@ -108,6 +108,30 @@ package body person_pkg is
       skip_line;
    end set;
 
+   procedure set(var: out person; source: in file_type) is
+      strVar1, strVar2: string(1..100);
+      last: natural := 0;
+   begin
+      get_line(source, strVar1, last);
+      put_line(strVar1(1..last));
+      var.name := new string(1..last);
+      var.name.all := strVar1(1..last);
+      get_line(source, strVar2, last);
+      put_line(strVar2(1..last));
+      var.firstname := new string(1..last);
+      var.firstname.all := strVar2(1..last);
+      get(source, var.birthyear);
+      put(var.birthyear);
+      new_line;
+      get(source, var.birthmonth);
+      put(var.birthmonth);
+      new_line;
+      get(source, var.birthday);
+      put(var.birthday);
+      new_line;
+
+   end set;
+
    function init(var: in person) return person_ptr is
       pers: person_ptr := new person;
    begin
