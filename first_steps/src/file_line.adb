@@ -1,6 +1,6 @@
 with Ada.Text_IO;
 procedure file_line is
-   Filename   : String := "expl.txt";
+   Filename   : String := "input.txt";
    File       : Ada.Text_IO.File_Type;
    Line_Count : Natural := 0;
 begin

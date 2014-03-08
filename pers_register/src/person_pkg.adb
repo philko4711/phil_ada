@@ -8,6 +8,8 @@ with Ada.Strings.Fixed;
 use Ada.Strings.Maps.Constants;
 use Ada.Strings.Fixed;
 
+with utilities_pkg;
+
 
 package body person_pkg is
    function ">"(a, b: in person) return boolean is
@@ -85,51 +87,69 @@ package body person_pkg is
       last: natural := 0;
    begin
       --put_line("person_pkg.set");
+      utilities_pkg.flush;
       put("Enter name: ");
       get_line(strVar1, last);
+      utilities_pkg.flush;
       var.name := new string(1..last);
       var.name.all := strVar1(1..last);
       new_line;
       put("Enter first name: ");
       get_line(strVar2, last);
+      utilities_pkg.flush;
       var.firstname := new string(1..last);
       var.firstname.all := strVar2(1..last);
       new_line;
       put("Enter birthyear: ");
       get(var.birthyear);
+      utilities_pkg.flush;
       new_line;
-      skip_line;
+      --skip_line;
       put("Enter birthmonth: ");
       get(var.birthmonth);
+      utilities_pkg.flush;
       new_line;
-      skip_line;
+      --skip_line;
       put("Enter birthday: ");
       get(var.birthday);
-      skip_line;
+      utilities_pkg.flush;
+      --skip_line;
    end set;
 
    procedure set(var: out person; source: in file_type) is
-      strVar1, strVar2: string(1..100);
+      strVar1: string(1..100);
       last: natural := 0;
    begin
       put_line("Entering new person:");
       get_line(source, strVar1, last);
-      put_line(strVar1(1..last));
+      --put_line(strVar1(1..last));
       var.name := new string(1..last);
       var.name.all := strVar1(1..last);
-      get_line(source, strVar2, last);
-      put_line(strVar2(1..last));
+      get_line(source, strVar1, last);
+      --put_line(strVar1(1..last));
       var.firstname := new string(1..last);
-      var.firstname.all := strVar2(1..last);
-      get(source, var.birthyear);
-      put(var.birthyear);
-      new_line;
-      get(source, var.birthmonth);
-      put(var.birthmonth);
-      new_line;
-      get(source, var.birthday);
-      put(var.birthday);
-      new_line;
+      var.firstname.all := strVar1(1..last);
+
+      get_line(source, strVar1, last);
+      var.birthyear := Integer'Value(strVar1(1..last));
+      --put(var.birthyear);
+      --get(source, var.birthyear);
+      --new_line;
+
+      get_line(source, strVar1, last);
+      var.birthmonth := Integer'Value(strVar1(1..last));
+      --put(var.birthmonth);
+      --get(source, var.birthmonth);
+      --new_line;
+
+      get_line(source, strVar1, last);
+      var.birthday := Integer'Value(strVar1(1..last));
+      --put(var.birthday);
+      --new_line;
+
+      --get(source, var.birthday);
+      --put(var.birthday);
+
 
    end set;
 

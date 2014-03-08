@@ -8,6 +8,8 @@ use Ada.Strings.Maps.Constants;
 with person_pkg;
 use person_pkg;
 
+with utilities_pkg;
+
 with tree_pkg;
 
 procedure main is
@@ -24,13 +26,13 @@ begin
                      Name => "input.txt");
    person_pkg.set(pers1, data_file);
    tree := tree_pkg.init(pers1);
-   tree_pkg.print_tree(tree);
---     loop
-      --exit when end_of_file(data_file);
+   --tree_pkg.print_tree(tree);
+   loop
+      exit when end_of_file(data_file);
       person_pkg.set(pers1, data_file);
       tree_pkg.input(pers1, tree);
-      tree_pkg.print_tree(tree);
---     end loop;
+      --tree_pkg.print_tree(tree);
+   end loop;
    main_loop:
    loop
       put_line("Enter choice:");
@@ -38,7 +40,9 @@ begin
       put_line("   (S)earch person");
       put_line("   (P)rint tree");
       put_line("   (Q)uit");
-      get(choice);
+      get_immediate(choice);
+      --utilities_pkg.flush;
+      --Skip_Line;
       --choice := anal_choice(choice);
       choice_loop:
       loop
