@@ -112,6 +112,7 @@ package body person_pkg is
       strVar1, strVar2: string(1..100);
       last: natural := 0;
    begin
+      put_line("Entering new person:");
       get_line(source, strVar1, last);
       put_line(strVar1(1..last));
       var.name := new string(1..last);

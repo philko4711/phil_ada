@@ -15,18 +15,22 @@ procedure main is
    pers1, pers2: person_pkg.person;
    tree: tree_pkg.node_ptr;
    choice: character;
-   data_file: FILE_TYPE;
+   data_file: Ada.Text_IO.File_Type;
 begin
    --init tree with 8 persons
-   open(data_file, In_File, "input.txt");
+   --open(data_file, In_File, "input.txt");
+   Ada.Text_IO.Open (File => data_file,
+                     Mode => Ada.Text_IO.In_File,
+                     Name => "input.txt");
    person_pkg.set(pers1, data_file);
    tree := tree_pkg.init(pers1);
-   loop
-      exit when end_of_file(data_file);
+   tree_pkg.print_tree(tree);
+--     loop
+      --exit when end_of_file(data_file);
       person_pkg.set(pers1, data_file);
       tree_pkg.input(pers1, tree);
       tree_pkg.print_tree(tree);
-   end loop;
+--     end loop;
    main_loop:
    loop
       put_line("Enter choice:");
