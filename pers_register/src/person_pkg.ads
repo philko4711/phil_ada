@@ -17,6 +17,11 @@ package person_pkg is
    procedure print(var: in person);
    procedure print(var: in person_ptr);
    function get(var: in person_ptr) return person;
+   function findName(pers: in person_ptr; name: in string) return boolean;
+  function findFirstname(pers: in person_ptr; name: in string) return boolean;
+  function findBirthYear(pers: in person_ptr; birthyear: in natural) return boolean;
+ function findBirthMonth(pers: in person_ptr; birthmonth: in natural) return boolean;
+ function findBirthDay(pers: in person_ptr; birthday: in natural) return boolean;
 
 private
    type person is record
