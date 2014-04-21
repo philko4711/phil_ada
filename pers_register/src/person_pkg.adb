@@ -194,4 +194,54 @@ package body person_pkg is
       --put_line("person_pkg.get");
       return(per);
    end get;
+
+  function findName(pers: in person_ptr; name: in string) return boolean is
+	begin
+		if(Translate(pers.all.name.all, Upper_Case_Map) = Translate(pers.all.name.all, Upper_Case_Map)) then
+			return(true);
+		else
+			return(false);
+		end if;
+	end findName;
+
+  function findFirstname(pers: in person_ptr; name: in string) return boolean is
+  begin
+    if(Translate(pers.all.firstname.all, Upper_Case_Map) = Translate(pers.all.firstname.all, Upper_Case_Map)) then
+      return(true);
+    else
+      return(false);
+    end if;
+  end findFirstname;
+
+  function findBirthYear(pers: in person_ptr; birthyear: in natural) return boolean is
+	begin
+    if(pers.all.birthyear = birthyear) then
+      return(true);
+    else
+      return(false);
+    end if;
+  end findBirthYear;
+
+  function findBirthMonth(pers: in person_ptr; birthmonth: in natural) return boolean is
+  begin
+    if(pers.all.birthmonth = birthmonth) then
+      return(true);
+    else
+      return(false);
+    end if;
+  end findBirthMonth;
+    
+  function findBirthDay(pers: in person_ptr; birthday: in natural) return boolean is
+  begin
+  if(pers.all.birthday = birthday) then
+    return(true);
+  else
+    return(false);
+  end if;
+  end findBirthDay;
+
+  function age(pers: in person_ptr; year: in natural) return natural is
+  begin
+    return(year - pers.all.birthyear);
+  end age;
 end person_pkg;

@@ -1,9 +1,11 @@
 with Ada;
 with Ada.Text_io;
-use Ada.Text_io;
+with Ada.Characters.handling;
 with Ada.Strings.Maps.Constants;
 with Ada.Strings.Fixed;
+use Ada.Text_io;
 use Ada.Strings.Maps.Constants;
+use Ada.Characters.handling;
 
 with person_pkg;
 use person_pkg;
@@ -20,18 +22,15 @@ procedure main is
    data_file: Ada.Text_IO.File_Type;
 begin
    --init tree with 8 persons
-   --open(data_file, In_File, "input.txt");
    Ada.Text_IO.Open (File => data_file,
                      Mode => Ada.Text_IO.In_File,
                      Name => "input.txt");
    person_pkg.set(pers1, data_file);
    tree := tree_pkg.init(pers1);
-   --tree_pkg.print_tree(tree);
    loop
       exit when end_of_file(data_file);
       person_pkg.set(pers1, data_file);
       tree_pkg.input(pers1, tree);
-      --tree_pkg.print_tree(tree);
    end loop;
    main_loop:
    loop
@@ -41,6 +40,7 @@ begin
       put_line("   (P)rint tree");
       put_line("   (Q)uit");
       get_immediate(choice);
+ 	    choice := To_upper(choice);
       --utilities_pkg.flush;
       --Skip_Line;
       --choice := anal_choice(choice);
@@ -61,6 +61,7 @@ begin
             exit main_loop;
             when others =>
             put_line("Please enter the right character");
+            exit choice_loop;
          end case;
       end loop choice_loop;
    end loop main_loop;
