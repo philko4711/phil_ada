@@ -197,16 +197,16 @@ package body person_pkg is
 
   function findName(pers: in person_ptr; name: in string) return boolean is
 	begin
-		if(Translate(pers.all.name.all, Upper_Case_Map) = Translate(pers.all.name.all, Upper_Case_Map)) then
+		if(Translate(pers.all.name.all, Upper_Case_Map) = Translate(name, Upper_Case_Map)) then
 			return(true);
 		else
 			return(false);
 		end if;
 	end findName;
 
-  function findFirstname(pers: in person_ptr; name: in string) return boolean is
+  function findFirstname(pers: in person_ptr; name: in string) return boolean is   --toDo: change variable name to firstname
   begin
-    if(Translate(pers.all.firstname.all, Upper_Case_Map) = Translate(pers.all.firstname.all, Upper_Case_Map)) then
+    if(Translate(pers.all.firstname.all, Upper_Case_Map) = Translate(name, Upper_Case_Map)) then
       return(true);
     else
       return(false);

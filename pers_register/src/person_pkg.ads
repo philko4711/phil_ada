@@ -7,7 +7,7 @@ use Ada.strings.unbounded;
 package person_pkg is
   type str_ptr is access string;
   type person is private;
-  type person_ptr is private;
+  type person_ptr is access person;
   function ">"(a, b: in person) return boolean;
   function ">"(a, b: in person_ptr) return boolean;
   function "="(a, b: in person) return boolean;
@@ -32,7 +32,6 @@ private
       birthmonth: natural;
       birthday: natural;
    end record;
-   type person_ptr is access person;
 end person_pkg;
 
 
