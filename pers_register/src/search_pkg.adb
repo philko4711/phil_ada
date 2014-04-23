@@ -34,10 +34,4 @@ package body search_pkg is
     return(list);
   end findBirthDays;
 
-  function findAges(tree: in tree_pkg.node_ptr; age: in natural) return pers_list.list_elm_ptr is
-    list: pers_list.list_elm_ptr := pers_list.init;
-  begin
-    return(list);
-  end findAges;
-
 end search_pkg;

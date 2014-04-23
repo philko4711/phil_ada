@@ -22,7 +22,6 @@ package person_pkg is
   function findBirthYear(pers: in person_ptr; birthyear: in natural) return boolean;
   function findBirthMonth(pers: in person_ptr; birthmonth: in natural) return boolean;
   function findBirthDay(pers: in person_ptr; birthday: in natural) return boolean;
-  function age(pers: in person_ptr; year: in natural) return natural;
 
 private
    type person is record

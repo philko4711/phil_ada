@@ -36,39 +36,27 @@ function init return list_elm_ptr is
       root := ptr;
    end push_front;
 
---   procedure insert(root: out list_elm_ptr; val: in person_ptr) is
---      ptr: list_elm_ptr := root;
---      new_elem: list_elm_ptr := null;
---   begin
---      while(ptr.all.next.all.data < val) loop
---         ptr := ptr.all.next;
---         if(ptr.all.next = null) then
---            exit;
---         end if;
---      end loop;
---      new_elem := new list_elm;
---      new_elem.all.data := val;
---      if(ptr.all.next /= null) then
---         new_elem.all.next := ptr.all.next;
---      end if;
---      if(ptr = root) then
---         root := new_elem;
---         end if;
---      ptr.all.next := new_elem;
---   end insert;
-
    procedure printList(root: in list_elm_ptr) is
       ptr: list_elm_ptr := root;
    begin
       loop
-         --put(ptr.all.data, 3);
+         new_line;
+         new_line;
          person_pkg.print(ptr.all.data);
-         put(" ");
          if (ptr.all.next = null) then
             exit;
          end if;
          ptr := ptr.all.next;
       end loop;
    end printList;
+
+  function empty(root: in list_elm_ptr) return boolean is
+  begin
+    if(root.all.data = null) then
+      return(true);
+    else
+      return(false);
+    end if;
+  end empty;
 
 end pers_list;

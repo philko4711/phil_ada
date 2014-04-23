@@ -8,5 +8,4 @@ package search_pkg is
 	function findBirthYears(tree: in tree_pkg.node_ptr; birthyear: in natural) return pers_list.list_elm_ptr;
 	function findBirthMonths(tree: in tree_pkg.node_ptr; birthmonth: in natural) return pers_list.list_elm_ptr;
 	function findBirthDays(tree: in tree_pkg.node_ptr; birthday: in natural) return pers_list.list_elm_ptr;
-  function findAges(tree: in tree_pkg.node_ptr; age: in natural) return pers_list.list_elm_ptr;
 end search_pkg;

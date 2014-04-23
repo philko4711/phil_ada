@@ -21,12 +21,22 @@ with tree_pkg;
 
 procedure main is
    function anal_choice(choice: in character) return character is separate;
+   procedure new_page is
+   begin
+      for i in 1..100 loop
+        new_line;
+      end loop;
+   end new_page;
    pers1, pers2: person_pkg.person;
    persPtr: person_pkg.person_ptr;
    tree: tree_pkg.node_ptr;
    choice: character;
    data_file: Ada.Text_IO.File_Type;
    list: pers_list.list_elm_ptr := pers_list.init;
+   str_var: string(1..1000);
+   nat_var: natural := 0;
+   year_var: natural := 0;
+   last: natural := 0;
 begin
    --init tree with 8 persons
    Ada.Text_IO.Open (File => data_file,
@@ -40,10 +50,7 @@ begin
       person_pkg.set(pers1, data_file);
       tree_pkg.input(pers1, tree);
    end loop;
-
-   list := search_pkg.findFirstNames(tree, "Mandy");
-   put_line("Found the name in: ");
-   pers_list.printList(list);
+   new_page;
    main_loop:
    loop
       put_line("Enter choice:");
@@ -60,16 +67,56 @@ begin
             person_pkg.set(pers1);
             tree_pkg.input(pers1, tree);
             exit choice_loop;
-            when 'S' =>
-            put_line("Searching");
+         when 'S' =>
+              put_line("Search person by:");
+              put_line("   (N)ame");
+              put_line("   (F)irstname");
+              put_line("   Birth(Y)ear");
+              put_line("   Birth(M)onth");
+              put_line("   Birth(D)ay");
+              get_immediate(choice);
+ 	            choice := To_upper(choice);
+              case choice is
+                when 'N' => 
+                  put_line("Enter search name");
+                  get_line(str_var, last);
+                  list := search_pkg.findNames(tree, str_var(1..last));
+                when 'F' =>
+                  put_line("Enter search firstname");
+                  get_line(str_var, last);
+                  list := search_pkg.findFirstNames(tree, str_var(1..last));
+                when 'Y' =>
+                  put_line("Enter search birthyear");
+                  get_line(str_var, last);
+                  nat_var := Integer'Value(str_var(1..last));
+                  list := search_pkg.findBirthYears(tree, nat_var);
+                when 'M' =>
+                  put_line("Enter search birthmonth");
+                  get_line(str_var, last);
+                  nat_var := Integer'Value(str_var(1..last));
+                  list := search_pkg.findBirthMonths(tree, nat_var);
+                when 'D' =>
+                  put_line("Enter search birthday");
+                  get_line(str_var, last);
+                  nat_var := Integer'Value(str_var(1..last));
+                  list := search_pkg.findBirthDays(tree, nat_var);
+                when others =>
+                  put_line("Illegal Command");
+                end case;
+                if(pers_list.empty(list) = false) then
+                  put_line("Found data in: ");
+                  pers_list.printList(list);
+                else
+                  put_line("Nothing found!");    
+                end if;
             exit choice_loop;
-            when 'P' =>
+         when 'P' =>
             tree_pkg.print_tree(tree);
             exit choice_loop;
-            when 'Q' =>
+         when 'Q' =>
             exit main_loop;
-            when others =>
-            put_line("Please enter the right character");
+         when others =>
+            put_line("Illegal command");
             exit choice_loop;
          end case;
       end loop choice_loop;

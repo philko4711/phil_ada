@@ -122,41 +122,22 @@ package body person_pkg is
    begin
       put_line("Entering new person:");
       get_line(source, strVar1, last);
-      --put_line(strVar1(1..last));
       var.name := new string(1..last);
       var.name.all := strVar1(1..last);
       get_line(source, strVar1, last);
-      --put_line(strVar1(1..last));
       var.firstname := new string(1..last);
       var.firstname.all := strVar1(1..last);
-
       get_line(source, strVar1, last);
       var.birthyear := Integer'Value(strVar1(1..last));
-      --put(var.birthyear);
-      --get(source, var.birthyear);
-      --new_line;
-
       get_line(source, strVar1, last);
       var.birthmonth := Integer'Value(strVar1(1..last));
-      --put(var.birthmonth);
-      --get(source, var.birthmonth);
-      --new_line;
-
       get_line(source, strVar1, last);
       var.birthday := Integer'Value(strVar1(1..last));
-      --put(var.birthday);
-      --new_line;
-
-      --get(source, var.birthday);
-      --put(var.birthday);
-
-
    end set;
 
    function init(var: in person) return person_ptr is
       pers: person_ptr := new person;
    begin
-      --put_line("person_pkg.init");
       pers.all.name := new string(1..var.name'Last);
       pers.all.name.all := var.name.all;
       pers.all.firstname := new string(1..var.firstname'Last);
@@ -169,7 +150,6 @@ package body person_pkg is
 
    procedure print(var: in person) is
    begin
-      --put_line("person_pkg.print (var)");
       put_line("Name: " & var.name.all);
       put_line("First name: " & var.firstname.all);
       put("Birthdate: ");
@@ -184,14 +164,12 @@ package body person_pkg is
    procedure print(var: in person_ptr) is
       per: person := var.all;
    begin
-      --put_line("person_pkg.set (ptr)");
       print(per);
    end print;
 
    function get(var: in person_ptr) return person is
       per: person := var.all;
    begin
-      --put_line("person_pkg.get");
       return(per);
    end get;
 
@@ -233,15 +211,11 @@ package body person_pkg is
     
   function findBirthDay(pers: in person_ptr; birthday: in natural) return boolean is
   begin
-  if(pers.all.birthday = birthday) then
-    return(true);
-  else
-    return(false);
-  end if;
+    if(pers.all.birthday = birthday) then
+      return(true);
+    else
+      return(false);
+    end if;
   end findBirthDay;
 
-  function age(pers: in person_ptr; year: in natural) return natural is
-  begin
-    return(year - pers.all.birthyear);
-  end age;
 end person_pkg;
