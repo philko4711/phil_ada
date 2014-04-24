@@ -30,7 +30,7 @@ package person_pkg is
 	--Function to compare a string to the name stored in a person
   function findName(pers: in person_ptr; name: in string) return boolean;
 	--Function to compare a string to the firstname stored in a person
-  function findFirstname(pers: in person_ptr; name: in string) return boolean;
+  function findFirstname(pers: in person_ptr; firstname: in string) return boolean;
 	--Function to compare a natural to the birthyear stored in a person
   function findBirthYear(pers: in person_ptr; birthyear: in natural) return boolean;
 	--Function to compare a natural to the birthmonth stored in a person
