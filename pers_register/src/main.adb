@@ -8,10 +8,8 @@ use Ada.Strings.Maps.Constants;
 use Ada.Characters.handling;
 
 with person_pkg;
-use person_pkg;
 
 with pers_list;
---use pers_list;
 
 with search_pkg;
 
@@ -29,7 +27,6 @@ procedure main is
       end loop;
    end new_page;
    pers1: person_pkg.person;
-   persPtr: person_pkg.person_ptr;
    tree: tree_pkg.node_ptr;
    choice: character;
    data_file: Ada.Text_IO.File_Type;
@@ -39,46 +36,72 @@ procedure main is
    year_var: natural := 0;
    last: natural := 0;
 	 succ: boolean := false;
+	 pers_succ: boolean := false;
 begin
-   --init tree with 8 persons
+   --init tree with 8 persons from data file
    Ada.Text_IO.Open (File => data_file,
                      Mode => Ada.Text_IO.In_File,
                      Name => "input.txt");
-   person_pkg.set(pers1, data_file);
-   tree := tree_pkg.init(pers1);
-   persPtr := person_pkg.init(pers1);
+   person_pkg.set(pers1, data_file, succ);
+	 if(succ = true) then
+	   tree := tree_pkg.init(pers1);
+		 else
+			 put_line("Error datafile corrupt -> abort");	
+       close(data_file);
+			 return;
+	 end if;
    loop
+			succ := false;
       exit when end_of_file(data_file);
-      person_pkg.set(pers1, data_file);
-      tree_pkg.input(pers1, tree);
+      person_pkg.set(pers1, data_file, succ);
+		 if(succ = true) then
+		   tree_pkg.input(pers1, tree);
+		 else
+			 put_line("Error datafile corrupt -> abort");	
+	 		 close(data_file);
+			 return;
+		 end if;     
    end loop;
 	 close(data_file);
+
+	 --main loop
    new_page;
    main_loop:
    loop
+			succ := false;
+			--main menu
       put_line("Enter choice:");
       put_line("   (E)nter new person");
       put_line("   (S)earch person");
       put_line("   (P)rint tree");
       put_line("   (Q)uit");
 			input_pkg.get_char(choice, succ);
+
 			if(succ = true) then
 	 	    choice := To_upper(choice);
       	choice_loop:
       	loop
          	case choice is
+
          		when 'E' =>
-          	  person_pkg.set(pers1);
-          	  tree_pkg.input(pers1, tree);
+							pers_succ := false;
+							person_pkg.set(pers1, pers_succ);
+          	  if(pers_succ = true) then
+	          	  tree_pkg.input(pers1, tree);
+							end if;
             exit choice_loop;
+
          		when 'S' =>
+						  succ := false;
+							--search menu
               put_line("Search person by:");
               put_line("   (N)ame");
               put_line("   (F)irstname");
               put_line("   Birth(Y)ear");
               put_line("   Birth(M)onth");
               put_line("   Birth(D)ay");
-							input_pkg.get_char(choice, succ);						
+							input_pkg.get_char(choice, succ);
+						
 							if(succ = true) then	
 	 	            choice := To_upper(choice);
   	            case choice is
@@ -91,6 +114,7 @@ begin
 											put_line("Input error");
 											exit choice_loop;
 										end if;
+
   	              when 'F' =>
   	                put_line("Enter search firstname");
 										input_pkg.get_string(str_var, last, succ);
@@ -101,6 +125,7 @@ begin
 											exit choice_loop;
 										end if;
   	                list := search_pkg.findFirstNames(tree, str_var(1..last));
+
   	              when 'Y' =>
   	                put_line("Enter search birthyear");
 										input_pkg.get_nat(nat_var, succ);
@@ -110,6 +135,7 @@ begin
 											put_line("Input error");
 											exit choice_loop;
 										end if;
+
   	              when 'M' =>
   	                put_line("Enter search birthmonth");
 										input_pkg.get_nat(nat_var, succ);
@@ -119,6 +145,7 @@ begin
 											put_line("Input error");
 											exit choice_loop;
 										end if;
+
   	              when 'D' =>
   	                put_line("Enter search birthday");
 										input_pkg.get_nat(nat_var, succ);
@@ -128,27 +155,34 @@ begin
 											put_line("Input error");
 											exit choice_loop;
 										end if;
+
                 	when others =>
                   	put_line("Illegal Command");
                 	end case;
+
                 	if(pers_list.empty(list) = false) then
                   	put_line("Found data in: ");
                  	 pers_list.printList(list);
                 	else
                   	put_line("Nothing found!");    
                 	end if;
+
 									new_line(2);
             	exit choice_loop;
 						end if;
+
          when 'P' =>
             tree_pkg.print_tree(tree);
             exit choice_loop;
+
          when 'Q' =>
             exit main_loop;
+
          when others =>
             put_line("Illegal command");
             exit choice_loop;
          end case;
+
       end loop choice_loop;
 		end if;
    end loop main_loop;
