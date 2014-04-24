@@ -9,13 +9,6 @@ package body utilities_pkg is
    begin
       loop
          get_immediate(c, more);
---         put("flushes ");
---         if(End_Of_Line) then
---            put("new line");
---         else
---            put(c);
---         end if;
---         new_line;
          exit when not more;
       end loop;
    end flush;
