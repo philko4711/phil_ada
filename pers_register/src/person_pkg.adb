@@ -8,14 +8,13 @@ with Ada.Strings.Fixed;
 use Ada.Strings.Maps.Constants;
 use Ada.Strings.Fixed;
 
+with input_pkg;
 with utilities_pkg;
 
 
 package body person_pkg is
    function ">"(a, b: in person) return boolean is
    begin
-      --put_line("person_pkg.operator > (var)");
-      --compare names
       if(Translate(a.name.all, Upper_Case_Map) = Translate(b.name.all, Upper_Case_Map)) then
          if(Translate(a.firstname.all, Upper_Case_Map) = Translate(b.firstname.all, Upper_Case_Map)) then
             if(a.birthyear = b.birthyear) then
@@ -53,7 +52,6 @@ package body person_pkg is
       ap: person := a.all;
       bp: person := b.all;
    begin
-      --put_line("person_pkg.operator > (ptr)");
       return(ap > bp);
    end ">";
 
@@ -82,57 +80,92 @@ package body person_pkg is
       end if;
    end "=";
 
-   procedure set(var: out person) is
-      strVar1, strVar2: string(1..100);
-      last: natural := 0;
-   begin
-      --put_line("person_pkg.set");
-      utilities_pkg.flush;
-      put("Enter name: ");
-      get_line(strVar1, last);
-      utilities_pkg.flush;
-      var.name := new string(1..last);
-      var.name.all := strVar1(1..last);
-      new_line;
-      put("Enter first name: ");
-      get_line(strVar2, last);
-      utilities_pkg.flush;
-      var.firstname := new string(1..last);
-      var.firstname.all := strVar2(1..last);
-      new_line;
-      put("Enter birthyear: ");
-      get(var.birthyear);
-      utilities_pkg.flush;
-      new_line;
-      --skip_line;
-      put("Enter birthmonth: ");
-      get(var.birthmonth);
-      utilities_pkg.flush;
-      new_line;
-      --skip_line;
-      put("Enter birthday: ");
-      get(var.birthday);
-      utilities_pkg.flush;
-      --skip_line;
-   end set;
-
-   procedure set(var: out person; source: in file_type) is
+	procedure set(var: out person; succ: out boolean) is
       strVar1: string(1..100);
       last: natural := 0;
    begin
-      put_line("Entering new person:");
-      get_line(source, strVar1, last);
+      put("Enter name: ");
+			succ := false;
+			input_pkg.get_string(strVar1, last, succ);
+			if(succ /= true) then
+				put_line("Input error");
+				return;
+			end if;
       var.name := new string(1..last);
       var.name.all := strVar1(1..last);
-      get_line(source, strVar1, last);
+      new_line;
+			succ := false;
+      put("Enter first name: ");
+			input_pkg.get_string(strVar1, last, succ);
+			if(succ /= true) then
+				put_line("Input error");
+				return;
+			end if;
       var.firstname := new string(1..last);
       var.firstname.all := strVar1(1..last);
-      get_line(source, strVar1, last);
-      var.birthyear := Integer'Value(strVar1(1..last));
-      get_line(source, strVar1, last);
-      var.birthmonth := Integer'Value(strVar1(1..last));
-      get_line(source, strVar1, last);
-      var.birthday := Integer'Value(strVar1(1..last));
+      new_line;
+			succ := false;
+      put("Enter birthyear: ");
+		  input_pkg.get_nat(var.birthyear, succ);
+			if(succ /= true) then
+				put_line("Input error");
+				return;
+			end if;
+      new_line;
+			succ := false;
+      put("Enter birthmonth: ");
+		  input_pkg.get_nat(var.birthmonth, succ);
+			if(succ /= true) then
+				put_line("Input error");
+				return;
+			end if;
+      new_line;
+			succ := false;
+      put("Enter birthday: ");
+		  input_pkg.get_nat(var.birthday, succ);
+			if(succ /= true) then
+				put_line("Input error");
+				return;
+			end if;
+   end set;
+
+   procedure set(var: out person; source: in file_type; succ: out boolean) is
+      strVar1: string(1..100);
+      last: natural := 0;
+   begin
+			input_pkg.get_string(strVar1, source, last, succ);
+			if(succ /= true) then
+				put_line("Input error name");
+				return;
+			end if;
+      var.name := new string(1..last);
+      var.name.all := strVar1(1..last);
+			succ := false;
+			input_pkg.get_string(strVar1, source, last, succ);
+			if(succ /= true) then
+				put_line("Input error firstname");
+				return;
+			end if;
+      var.firstname := new string(1..last);
+      var.firstname.all := strVar1(1..last);
+			succ := false;
+			input_pkg.get_nat(var.birthyear, source, succ);
+			if(succ /= true) then
+				put_line("Input error year");
+				return;
+			end if;
+			succ := false;
+			input_pkg.get_nat(var.birthmonth, source, succ);
+			if(succ /= true) then
+				put_line("Input error month");
+				return;
+			end if;
+			succ := false;
+			input_pkg.get_nat(var.birthday, source, succ);
+			if(succ /= true) then
+				put_line("Input error day");
+				return;
+			end if;
    end set;
 
    function init(var: in person) return person_ptr is
