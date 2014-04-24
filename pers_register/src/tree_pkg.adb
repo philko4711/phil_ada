@@ -7,7 +7,6 @@ with person_pkg;
 package body tree_pkg is
    procedure input(var: in person; root: out node_ptr) is
    begin
-      --put_line("tree_pkg.input");
       if(var > person_pkg.get(root.data)) then
          if(root.right = null) then
             root.right := init(var);
@@ -25,7 +24,6 @@ package body tree_pkg is
 
    procedure print_tree(root: in node_ptr) is
    begin
-      --put_line("tree_pkg.print_tree");
       if(root /= null) then
          print_tree(root.left);
          person_pkg.print(root.data);
@@ -37,8 +35,6 @@ package body tree_pkg is
    function init(data: in person) return node_ptr is
       root: node_ptr := null;
    begin
-      --put_line("tree_pkg.init");
-      put_line("init");
       root := new node;
       root.all.data := person_pkg.init(data);
       root.left := null;
